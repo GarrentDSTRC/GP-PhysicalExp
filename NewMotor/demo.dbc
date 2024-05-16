@@ -1,0 +1,93 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: IC_IVI
+
+
+BO_ 2364539904 msg_moto_speed: 8 Vector__XXX
+ SG_ moto_speed : 24|16@1+ (0.125,0) [0|8031.875] "rpm"  IC_IVI
+
+BO_ 2566844160 msg_oil_pressure: 8 Vector__XXX
+ SG_ oil_pressure : 24|8@1+ (4,0) [0|1000] "kpa"  IC_IVI
+
+BO_ 2365484270 msg_speed_can: 8 IC_IVI
+ SG_ speed_can : 48|16@1+ (0.00390625,0) [0|255.99609375] "km/h" Vector__XXX
+
+BO_ 2566843904 msg_water_temp: 1 Vector__XXX
+ SG_ Water_temp : 0|8@1+ (1,-40) [-40|210] "℃"  IC_IVI
+
+BO_ 2566804992 msg_urea_level: 1 Vector__XXX
+ SG_ Urea_level : 0|8@1+ (0.4,0) [0|100] "%"  IC_IVI
+
+
+
+CM_ BO_ 2364539904 "发动机转速报文";
+CM_ SG_ 2364539904 moto_speed "发动机转速";
+CM_ BO_ 2566844160 "机油压力报文";
+CM_ SG_ 2566844160 oil_pressure "发动机机油压力";
+CM_ BO_ 2365484270 "车速外发报文";
+CM_ SG_ 2365484270 speed_can "车速外发报文";
+CM_ BO_ 2566843904 "水温报文";
+CM_ SG_ 2566843904 water_temp "发动机水温";
+CM_ BO_ 2566804992 "尿素液位报文";
+CM_ SG_ 2566804992 Urea_level "尿素箱尿素液位";
+BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType";
+BA_DEF_ SG_  "GenSigInactiveValue" INT 0 0;
+BA_DEF_ BO_  "GenMsgCycleTime" INT 0 0;
+BA_DEF_ BO_  "GenMsgSendType" ENUM  "Cyclic","not_used","not_used","not_used","not_used","Cyclic","not_used","IfActive","NoMsgSendType";
+BA_DEF_ BU_  "NmStationAddress" HEX 0 0;
+BA_DEF_  "DBName" STRING ;
+BA_DEF_  "BusType" STRING ;
+BA_DEF_DEF_  "GenSigSendType" "Cyclic";
+BA_DEF_DEF_  "GenSigInactiveValue" 0;
+BA_DEF_DEF_  "GenMsgCycleTime" 0;
+BA_DEF_DEF_  "GenMsgSendType" "NoMsgSendType";
+BA_DEF_DEF_  "NmStationAddress" 0;
+BA_DEF_DEF_  "DBName" "";
+BA_DEF_DEF_  "BusType" "CAN";
+BA_ "DBName" "Common_DBC";
+BA_ "NmStationAddress" BU_ IC_IVI 0;
+BA_ "GenMsgCycleTime" BO_ 2364539904 10;
+BA_ "GenMsgSendType" BO_ 2364539904 0;
+BA_ "GenMsgCycleTime" BO_ 2566844160 500;
+BA_ "GenMsgSendType" BO_ 2566844160 0;
+BA_ "GenMsgSendType" BO_ 2365484270 0;
+BA_ "GenMsgCycleTime" BO_ 2365484270 50;
+BA_ "GenMsgSendType" BO_ 2566843904 0;
+BA_ "GenMsgCycleTime" BO_ 2566843904 1000;
+BA_ "GenMsgCycleTime" BO_ 2566804992 1000;
+BA_ "GenMsgSendType" BO_ 2566804992 0;
+BA_ "GenSigInactiveValue" SG_ 2364539904 Moto_speed 0;
+
