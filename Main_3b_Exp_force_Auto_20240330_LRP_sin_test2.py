@@ -7,9 +7,14 @@ from NewMotor.mf5015 import CANdev
 import os
 import time
 from sample.example_DAQUSB401x import *
-from force_decouple_python.tf_downstream_txt_20240330 import process_data_and_calculate_metrics
+from force_decouple_python.tf_downstream_txt_20240330 import *
 Flaps=20
-controlFre = 500
+controlFre = 3000
+
+#徐文华:
+#平动传感器 200mm=2.5v
+#转动传感器，360度=5v
+
 
 
 # Base directory where all the operations will be conducted
@@ -56,7 +61,7 @@ def motor_control(can_dict, T, datap, datah):
         Now = time.time()
         periodtime = (Now - Start) / T
         periodtick = periodtime % 1
-        can_dict['pitch_1'] = datap[int(periodtick * len(datap))] * improved_sigmoid_alpha(periodtime)
+        can_dict['pitch_1'] = datap[int(periodtick * len(datap))] * improved_sigmoid_alpha(periodtime)*-1
         can_dict['heave_1'] = datah[int(periodtick * len(datap))] * improved_sigmoid_alpha(periodtime)
         i += 1
     print("Motor control finished")
@@ -65,16 +70,14 @@ def daq_collection(T):
     global global_results
     time.sleep(2*T)  # 等待电机稳定
     print(' ---DAQ software started--- ')
-    result = main_sample(T * (Flaps - 4))
+    result = main_sample(T * (Flaps - 4),T)
 
-    now = datetime.datetime.now()
-    timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-    filename = f"force_decouple_python\\raw_data\\{timestamp}.csv"
-    np.savetxt(filename, result.T, delimiter=',', fmt='%0.4f')
+
 
     print(' ---DAQ software finished--- ')
-    CT, ETA = process_data_and_calculate_metrics(result)
-    global_results=[CT, ETA]  # 将结果放入全局变量
+    time.sleep(3*T)
+    CT, ETA = process_data_and_calculate_metrics(result,T)
+    global_results=[CT,  ETA]  # 将结果放入全局变量
     print("Results put into global_results")
 
 def execute_experiment(folder,can_dict):
@@ -117,7 +120,7 @@ def execute_experiment(folder,can_dict):
 
 if __name__ == "__main__":
     # Maximum number of experiments to check
-    max_experiments = 2
+    max_experiments = 200
 
     # Main loop to check each directory for flags and run experiments
     experiment_count = 0
@@ -135,9 +138,10 @@ if __name__ == "__main__":
             if check_flag(os.path.join(base_dir, folder)):
                 execute_experiment(folder,can_dict)
                 experiment_count += 1
+                print("num_exp",experiment_count)
                 if experiment_count >= max_experiments:
                     break
-            time.sleep(10)  # Wait for 10 seconds before checking again to prevent high CPU usage
+            time.sleep(2)  # Wait for 10 seconds before checking again to prevent high CPU usage
 
     print("Completed all experiments or reached limit of 1000.")
 

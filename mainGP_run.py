@@ -29,7 +29,7 @@ pathx=r'.\Database\train_x.csv'
 pathy=r'.\Database\train_y.csv'
 
 
-init_sample=8*8
+init_sample=8*4
 training_iter=30#55#110
 Infillpoints=8*2
 Episode=87#47
@@ -38,7 +38,7 @@ device = torch.device("cpu")
 num_tasks=2
 Offline=0
 dict = [i for i in range(TestX.shape[0])]
-testmode="experiment"#DTLZ#WFG
+testmode="experiment"#DTLZ#WFG#CFD
 
 dim = np.array(UPB).shape[0]
 def save():
@@ -88,12 +88,12 @@ if __name__=="__main__":
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
 
-    if os.path.exists(path1):
-        initialDataX=np.load(path1,allow_pickle=True)
-        initialDataY=np.load(path2,allow_pickle=True)
+    if os.path.exists(pathx):
+        #initialDataX=np.load(path1,allow_pickle=True)
+        #initialDataY=np.load(path2,allow_pickle=True)
 
-        #initialDataX=np.loadtxt(pathx, delimiter=',')
-        #initialDataY=np.loadtxt(pathy,delimiter=',')
+        initialDataX=np.loadtxt(pathx, delimiter=',')
+        initialDataY=np.loadtxt(pathy,delimiter=',')
 
 
         dict=np.load(path3,allow_pickle=True).astype(int).tolist()
@@ -127,6 +127,9 @@ if __name__=="__main__":
             ##online
             initialDataX, initialDataY = findpointOL(X,num_task=2,mode=testmode)
         initialDataX = normalizer.normalize(X)
+
+        np.savetxt(r'.\Database\train_x.csv', np.array(initialDataX.cpu()), delimiter=',')
+        np.savetxt(r'.\Database\train_y.csv', np.array(initialDataY.cpu()), delimiter=',')
 
 
     train_x=torch.tensor(initialDataX).to(device).to(torch.float32)
@@ -175,10 +178,11 @@ if __name__=="__main__":
         #f.writelines((str(train_y.shape[0]) + ",", str( M[0]) + ",", str( M[1])+ ",", str(IGD) + "\n"))
         #f.close()
         ##########################################################infill###################
+        cofactor=[0.5,1]
         X,Y=infillGA(model, likelihood, Infillpoints, dict, num_tasks,"EI", device=device, cofactor=cofactor, y_max=[torch.max(train_y[:,0]).item() ,torch.max(train_y[:,1]).item()], offline=Offline,train_x=train_x,testmode=testmode,final_population_X=pop,norm=normalizer)
         cofactor=UpdateCofactor(model,likelihood,X.to(torch.float32),Y.to(torch.float32),cofactor,torch.max(train_y,dim=0).values-torch.min(train_y,dim=0).values)
-        #cofactor=[0.5,0.5]
-        print("addpoint",X)
+
+        print("addpoint",X,Y)
         train_x=torch.cat((train_x,X),dim=0).to(torch.float32)
         train_y=torch.cat((train_y,Y),dim=0).to(torch.float32)
         model1 = SpectralMixtureGPModelBack(train_x, train_y[:, 0], likelihood1).to(device)

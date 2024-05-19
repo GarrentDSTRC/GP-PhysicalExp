@@ -145,7 +145,7 @@ def adc_hw_trigger_example( device):
         print("")
 
 
-def main_sample(duration):
+def main_sample(duration,T):
     index=0
     libdaq.libdaq_init()
     device_count=libdaq.libdaq_device_get_count()
@@ -166,7 +166,8 @@ def main_sample(duration):
     samplepara.channel_list=channel_list
     samplepara.sample_mode=ADC_SAMPLE_MODE_SYNC   #只支持同步采样模式
     samplepara.frequency=500  #采样频率10kHz
-    samplepara.cycles=5 #采样5组数据
+    samplepara.cycles=int(16*500*T) #采样5组数据
+    print('samplepara.cycles',samplepara.cycles)
 
     device.adc.select_triggerSrc(ADC_TRIG_SRC_SW)#选择软件触发方式
     device.adc.set_sample_parameter(samplepara) #配置采样参数
@@ -175,14 +176,14 @@ def main_sample(duration):
     data_len=samplepara.cycles*len(channel_list) #计算数据个数
     start_time = time.time()
     collected_data = []
-    while (time.time() - start_time) < duration:
-        device.adc.clear_buffer()  # 清除ADC模块硬件和软件缓冲区数据
-        device.adc.start_task()  # 启动采样任务
-        device.adc.send_trigger()  # 默认为软件触发,发送软件触发命令
-        (errorcode,result)=device.adc.read_analog_sync(data_len,1000)
-        collected_data.extend(result)
-        device.adc.stop_task()
-        #打印采样结果
+    #while (time.time() - start_time) < duration:
+    device.adc.clear_buffer()  # 清除ADC模块硬件和软件缓冲区数据
+    device.adc.start_task()  # 启动采样任务
+    device.adc.send_trigger()  # 默认为软件触发,发送软件触发命令
+    (errorcode,result)=device.adc.read_analog_sync(data_len,1000000)
+    collected_data.extend(result)
+    device.adc.stop_task()
+    #打印采样结果
     device.adc.stop_task()  # 停止采样任务
     print("ADC sample, soft trigger, get data len: %d"%(len(collected_data)))
 

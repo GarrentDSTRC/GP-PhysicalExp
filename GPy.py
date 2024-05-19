@@ -31,10 +31,10 @@ CA = torch.linspace(10,35,6)
 a,b,c,d,e,f,g=torch.meshgrid(St,ad,phi,theta,N,A,CA)
 TestX=torch.as_tensor(list(zip(a.flatten(),b.flatten(),c.flatten(),d.flatten(),e.flatten(),f.flatten(),g.flatten())) )
 OLSCALE=1
-UPB=[0.25, 1.3, 85, 180, 0.95,0.95]
-LOWB=[0.05, 0.7, 65, -180, -0.95,-0.95]
-#UPB=[1.0, 0.6, 40, 0, 1,1]
-#LOWB=[0.4, 0.1, 5, -180, -1,-1]
+#UPB=[0.9, 0.8, 85, -45, 0.9,0.9]
+#LOWB=[0.4, 0.4, 55, -140, -0.9,-0.9]
+UPB=[0.25, 0.6, 40, 180, 0.95,0.95]
+LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95]
 import time
 inittime=time.time()
 from gpytorch.kernels import Kernel
@@ -285,7 +285,7 @@ def infillGA(model, likelihood, n_points, dict, num_tasks=1, method="error", cof
                                        verbose=True)
     # algorithms.eaMuPlusLambda(pop, toolbox, mu=100, lambda_=100, cxpb=0.8, mutpb=1.0/NDIM, ngen=100)
     # 计算Pareto前沿集合
-    for i in range(1, 7):
+    for i in range(1, 30):
         fronts = tools.emo.sortLogNondominated(pop, popsize, first_front_only=False)
         # pop, logbook = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=50, stats=stats, halloffame=hof,
         # verbose=True)
@@ -343,16 +343,16 @@ def infillGA(model, likelihood, n_points, dict, num_tasks=1, method="error", cof
                 candidate = [round(x.item(), 2)  for i, x in enumerate(ind)]
                 if candidate not in candidates and candidate not in np.round(train_x.tolist(),2).tolist() :
                     candidates.append(candidate)
-                if len(candidates) == n_points:
-                    break
-                if len(candidates) >= n_points:
-                    candidates=candidates[0:n_points]
-                    break
-        if len(candidates) < n_points:
+        if len(candidates) == n_points:
+            pass  # 如果候选数量与所需点数相同，则不需要做任何操作
+        elif len(candidates) >= n_points:
+            candidates = random.sample(candidates, n_points)  # 从候选列表中随机选择n_points个元素
+        elif len(candidates) < n_points:
             candidates = candidates[0:len(candidates)-len(candidates)%8]
 
         X = torch.tensor(candidates).to(device).to(torch.float32)
         denorm_X=norm.denormalize(X)
+        print("addpoint",X)
         POINT,Y=findpointOL(denorm_X,num_task=num_tasks,mode=testmode)
         return X,Y
 

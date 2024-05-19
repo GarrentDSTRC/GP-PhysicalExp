@@ -15,10 +15,10 @@ testmode="experiment"#DTLZ#WFG
 path1 = r".\Database\x.csv"
 path2 = r".\Database\y.csv"
 X = np.loadtxt(path1, delimiter=',')
-X = normalizer.denormalize(X)
+#X = normalizer.denormalize(X)
 
-for i in range(0, len(X), 16):
-    batch_X = X[i:i+16]
+for i in range(0, len(X), 8):
+    batch_X = X[i:i+8]
     initialDataX, initialDataY = findpointOL(batch_X, num_task=2, mode=testmode)
     if i<1:
        ALLY=initialDataY 

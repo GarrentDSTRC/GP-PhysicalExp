@@ -4,9 +4,9 @@ from scipy.interpolate import interp1d
 
 import matplotlib.pyplot as plt
 
-controlFre = 500
+controlFre = 3000
 c=0.06
-U=0.06
+U=0.2
 mode="experiment"
 def generate_waveform( X, folder_name,mode="CFD"):
     # 创建文件夹（如果不存在）
@@ -67,7 +67,7 @@ def generate_waveform( X, folder_name,mode="CFD"):
     f_interp2 = interp1d(phi_values2, z_values2)
     z_uniform2 = f_interp2(phi_uniform2)
 
-    num_rolls = int(-phase_difference/360 / T * len(z_uniform))
+    num_rolls = int(-phase_difference/360  * len(z_uniform))
     z_uniform = np.roll(z_uniform, num_rolls)
    # 保存第一个波形到文件
 
@@ -104,8 +104,13 @@ def generate_waveform( X, folder_name,mode="CFD"):
 
     return f"Waveforms saved to {folder_name}/control.txt and {folder_name}/control2.txt"
 
-UPB=[1.0, 0.6, 40, 180, 1,1,1000]
-LOWB=[0.4, 0.1, 5, -180, -1,-1,100]
+#UPB=[1.0, 0.6, 40, 180, 1,1,1000]
+#LOWB=[0.4, 0.1, 5, -180, -1,-1,100]
+UPB=[0.25, 0.6, 40, 180, 0.95,0.95,1000]
+LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95,100]
+
+#UPB=[1, 1, 30, 180, 1,1,1000]
+#LOWB=[0.6, 0.6, 0, -180, -1,-1,100]#第一次实验
 import torch
 class Normalizer:
     def __init__(self, low_bound=LOWB, up_bound=UPB):
@@ -123,13 +128,21 @@ class Normalizer:
 if __name__=="__main__":
     norm=Normalizer()
     #x=[9.90E-01,	9.30E-01,	9.00E-01,	3.50E-01,	3.20E-01,	9.50E-01,	3.10E-01] #0015
+    #x = [9.90E-01,9.30E-01,9.00E-01,3.50E-01,3.20E-01,9.50E-01,3.10E-01]  # 0015
     #x=[9.61E-01,	7.03E-02,	4.45E-01,	1.17E-01,	3.67E-01,	3.36E-01,	9.30E-01]#RANDOM ANGLE*-1
     #x=[9.80E-01,	9.80E-01,	8.80E-01,	7.90E-01,	8.60E-01,	0.00E+00,0.5]#0024
     #x=[0.99	,0.87,0.88,0.85,	0.95	,0.98,0.5]#6129 RANDOM2 ANGLE*-1
-    #x=[5.30E-01,	2.10E-01,	8.50E-01,	1.00E+00,	9.80E-01,	4.30E-01,	9.10E-01]#采集
+    #x = [0.99000001,	0.829999983,	0.800000012,	0.540000021,	0.319999993,	0.01,9.10E-01]  # 采集
+    #x = [0.945299983, 0.367199987, 0.648400009, 0.148399994, 0.335900009, 0.226600006, 9.10E-01]  # 采集
     #0.80	0.87	0.60	0.65	0.43	0.01 #6129 2
-    X=[1,	0.6, 40,	0,	0.95,	9.50E-01,	3.10E-01]
-    #X=norm.denormalize(x).tolist()
+    #X = [0.5,	0	,0,	6.13E-01,	0.5,	0.5,0.31]
+    #x=[0.74000001,	0.460000001,	0.660000026,	0.189999998,	0.109999999,	0.360000014,	3.10E-01] 采集效率17%组3
+    #[9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01  采集效率19%组1
+    #6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,  采集效率19%组2
+
+
+
+    X=norm.denormalize(x).tolist()
 
 
 
