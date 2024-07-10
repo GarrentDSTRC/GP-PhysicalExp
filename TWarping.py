@@ -18,7 +18,7 @@ def generate_waveform( X, folder_name,mode="CFD"):
     else:
         f = X[0] * U / c
     T = 1 / f
-    #print(T)
+    print(T)
     points = T * controlFre
 
 
@@ -86,10 +86,12 @@ def generate_waveform( X, folder_name,mode="CFD"):
     else:
         with open(os.path.join(folder_name, "control2.txt"), "w") as f2:
             for value in z_uniform2:
-                f2.write(str(value*100*4.5) + "\n")
+                #f2.write(str(value*100*4.5*c) + "\n")
+                f2.write(str(value*0.1) + "\n")
         with open(os.path.join(folder_name, "control.txt"), "w") as f:
             for value in z_uniform:
-                f.write(str(value*180/np.pi*3) + "\n")
+                #f.write(str(value*180/np.pi*3) + "\n")
+                f.write(str(value * 180 / np.pi ) + "\n")
 
 
     # 绘制第一个波形
@@ -104,10 +106,22 @@ def generate_waveform( X, folder_name,mode="CFD"):
 
     return f"Waveforms saved to {folder_name}/control.txt and {folder_name}/control2.txt"
 
-#UPB=[1.0, 0.6, 40, 180, 1,1,1000]
-#LOWB=[0.4, 0.1, 5, -180, -1,-1,100]
-UPB=[0.25, 0.6, 40, 180, 0.95,0.95,1000]
-LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95,100]
+
+
+#UPB=[0.25, 0.6, 40, 180, 0.95,0.95,1000]
+#LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95,100]#推力优化
+
+UPB=[0.25, 1.3, 85, 180, 0.95,0.95,1000]
+LOWB=[0.05, 0.7, 65, -180, -0.95,-0.95,100] #能量采集 CFD
+
+#UPB=[0.134, 1.3, 85, -45, 0.9,0.9]
+#LOWB=[0.06, 0.7, 55, -140, -0.9,-0.9]#能量采集 实验无量纲化
+
+
+# UPB=[0.9, 0.8, 85, -45, 0.9,0.9,1000]
+# LOWB=[0.4, 0.4, 55, -140, -0.9,-0.9,100] #能量采集 实验
+
+
 
 #UPB=[1, 1, 30, 180, 1,1,1000]
 #LOWB=[0.6, 0.6, 0, -180, -1,-1,100]#第一次实验
@@ -135,15 +149,19 @@ if __name__=="__main__":
     #x = [0.99000001,	0.829999983,	0.800000012,	0.540000021,	0.319999993,	0.01,9.10E-01]  # 采集
     #x = [0.945299983, 0.367199987, 0.648400009, 0.148399994, 0.335900009, 0.226600006, 9.10E-01]  # 采集
     #0.80	0.87	0.60	0.65	0.43	0.01 #6129 2
-    #X = [0.5,	0	,0,	6.13E-01,	0.5,	0.5,0.31]
+    x = [8.60E-01,	4.20E-01	,6.40E-01	,2.70E-01	,0.5	,0.5
+,0.1]
+
     #x=[0.74000001,	0.460000001,	0.660000026,	0.189999998,	0.109999999,	0.360000014,	3.10E-01] 采集效率17%组3
     #[9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01  采集效率19%组1
     #6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,  采集效率19%组2
 
-
+    x=[6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,0]
+    #X=[0.06, 0.7, 55, -140, 0.9,0.9,100]
+    #x=norm.normalize(X).tolist()
 
     X=norm.denormalize(x).tolist()
-
+    print(X)
 
 
     last_col = X[-1]  # Extract the last column

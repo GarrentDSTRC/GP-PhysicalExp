@@ -11,7 +11,7 @@ import os
 import numpy as np
 import random
 from GPy import *
-testmode="experiment"#DTLZ#WFG
+mode="experiment"#DTLZ#WFG
 path1 = r".\Database\x.csv"
 path2 = r".\Database\y.csv"
 X = np.loadtxt(path1, delimiter=',')
@@ -19,7 +19,7 @@ X = np.loadtxt(path1, delimiter=',')
 
 for i in range(0, len(X), 8):
     batch_X = X[i:i+8]
-    initialDataX, initialDataY = findpointOL(batch_X, num_task=2, mode=testmode)
+    initialDataX, initialDataY = findpointOL(batch_X, num_task=2, mode=mode)
     if i<1:
        ALLY=initialDataY 
     else:

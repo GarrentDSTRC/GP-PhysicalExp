@@ -14,6 +14,7 @@ from GPy import *
 from opt import *
 import numpy as np
 
+
 path1=r".\Database\saveX_gpytorch_multi_EI_MS_H.npy"
 path2=r".\Database\savey_gpytorch_multi_EI_MS_H.npy"
 path1n=r".\ROM\E3\saveX_gpytorch_multi_EI_MS %d.npy" %744
@@ -28,7 +29,7 @@ LOWBound = np.array(LOWB).T
 pathx=r'.\Database\train_x.csv'
 pathy=r'.\Database\train_y.csv'
 
-
+pathtest=r'.\Database\testx.csv'
 init_sample=8*4
 training_iter=30#55#110
 Infillpoints=8*2
@@ -56,10 +57,12 @@ def save():
 def MAE(model, likelihood):
     # 使用numpy的random.uniform函数，生成一个80行7列的随机矩阵，每个元素在对应的区间内
     #X = np.random.uniform(LOWBound, UPBound, (80, 7))
-    X = train_x[-80:,:]  # 80x7 matrix
-    noise = np.random.uniform(-0.01, 0.01, X.shape)  # generate noise with the same shape as X
+
+    X = np.loadtxt(pathtest, delimiter=',')
+
+    #noise = np.random.uniform(-0.01, 0.01, X.shape)  # generate noise with the same shape as X
     #X_noisy = X + noise  # add noise to X
-    X[:,0:2]=X[:,0:2]-0.01
+    #X[:,0:2]=X[:,0:2]-0.01
     test_x = torch.tensor(X).to(device)
     model.eval()
     likelihood.eval()
@@ -72,6 +75,8 @@ def MAE(model, likelihood):
         v22 = observed_pred_y2[1].variance
     # test_y_actual1 = torch.sin(((test_x[:, 0] + test_x[:, 1]) * (2 * math.pi))).view(n, n)
     print("测试点预测值(推力：效率)", observed_pred_y21, observed_pred_y22 )
+    np.savetxt(r'.\Database\test_y1.csv', np.array(observed_pred_y21), delimiter=',')
+    np.savetxt(r'.\Database\test_y2.csv', np.array(observed_pred_y22), delimiter=',')
     print("测试点variance(推力：效率)", v21, v22 )
     x,test_y_actual = findpointOL(test_x, num_tasks, mode=testmode)
     print("测试点真实值(推力：效率)", test_y_actual)
@@ -169,7 +174,8 @@ if __name__=="__main__":
                 loss.backward(retain_graph=True)
                 print('Iter %d/%d - Loss: %.3f' % (i + 1, training_iter, loss.item()))
                 optimizer.step()
-        #save()
+        save()
+        MAE(model, likelihood)
         #################test###################
         IGD,pop=optIGD(model, likelihood, num_task=num_tasks, testmode=testmode, train_x=train_x)
         #with gpytorch.settings.cholesky_jitter(1e-0):
@@ -178,7 +184,7 @@ if __name__=="__main__":
         #f.writelines((str(train_y.shape[0]) + ",", str( M[0]) + ",", str( M[1])+ ",", str(IGD) + "\n"))
         #f.close()
         ##########################################################infill###################
-        cofactor=[0.5,1]
+        #cofactor=[0.5,1]
         X,Y=infillGA(model, likelihood, Infillpoints, dict, num_tasks,"EI", device=device, cofactor=cofactor, y_max=[torch.max(train_y[:,0]).item() ,torch.max(train_y[:,1]).item()], offline=Offline,train_x=train_x,testmode=testmode,final_population_X=pop,norm=normalizer)
         cofactor=UpdateCofactor(model,likelihood,X.to(torch.float32),Y.to(torch.float32),cofactor,torch.max(train_y,dim=0).values-torch.min(train_y,dim=0).values)
 

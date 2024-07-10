@@ -1,24 +1,18 @@
-import numpy as np
-import time
+from sympy import symbols, Function, sin, cos, sqrt, integrate
 
+# 定义符号
+phi_0, omega, t, dt, theta = symbols('phi_0 omega t dt theta')
 
-dir0 = r'D:\PycharmProjects\EXP_daq_20240311_force measurement\exp20230330\推力\0024\非对称'
-dir_p = dir0 + '\control.txt'
-dir_h = dir0 + '\control2.txt'
-datap = np.loadtxt(dir_p)
-datah = np.loadtxt(dir_h)
+# 定义函数 ω(τ)
+omega_func = Function('omega')(t)
 
-length = datap.shape[0]
-print(datap.shape)
-print(datah.shape)
+# 定义全微分表达式
+total_differential = phi_0 * (-sin(theta) + sin(theta + integrate(omega_func, (t, t + dt))))
 
-t0 = time.time()
+# 确定梯度分量
+partial_derivative_omega = diff(total_differential, omega)
+partial_derivative_t = diff(total_differential, t)
 
-for i in range(4*1000):
-    t1= time.time() - t0
-    idx = int(1000*t1) % length
-    heave = datah[idx] * 1000
-    pitch = datap[idx] * 180.0/np.pi
-    time.sleep(0.005)
-    #print(t1, heave, pitch)
-    print(np.max(datah*1000))
+# 计算梯度的模
+gradient_magnitude = sqrt(partial_derivative_omega**2 + partial_derivative_t**2)
+gradient_magnitude.simplify()

@@ -2,10 +2,10 @@ import numpy as np
 import pandas as pd
 
 # Given parameters
-UPB=[0.25, 0.6, 40, 180, 0.95,0.95]
-LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95]
+UPB=[0.25, 0.6, 40, 180, 0,0]
+LOWB=[0.1, 0.1, 5, -180, 0,0]
 #linspace = [5, 0,5, 0,5,0]
-linspace = [5, 5,0, 0,0,5]
+linspace = [10, 0, 10, 0,0,0]
 
 # Adjusting the code to insert a column of zeros for dimensions with linspace = 0
 matrices = []
