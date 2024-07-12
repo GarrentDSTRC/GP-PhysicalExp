@@ -86,12 +86,12 @@ def generate_waveform( X, folder_name,mode="CFD"):
     else:
         with open(os.path.join(folder_name, "control2.txt"), "w") as f2:
             for value in z_uniform2:
-                #f2.write(str(value*100*4.5*c) + "\n")
-                f2.write(str(value*0.1) + "\n")
+                f2.write(str(value*100*4.5*c) + "\n")
+                #f2.write(str(value*0.1) + "\n")
         with open(os.path.join(folder_name, "control.txt"), "w") as f:
             for value in z_uniform:
-                #f.write(str(value*180/np.pi*3) + "\n")
-                f.write(str(value * 180 / np.pi ) + "\n")
+                f.write(str(value*180/np.pi*3) + "\n")
+                #f.write(str(value * 180 / np.pi ) + "\n")
 
 
     # 绘制第一个波形
