@@ -17,8 +17,7 @@ Path = r'force_decouple_python/raw_data/'
 savepath = r'force_decouple_python/decoupled/'
 pathlist = os.listdir(r'force_decouple_python/raw_data')
 
-b, a = signal.butter(1, 0.01, 'lowpass')  # 越小越光滑
-
+b, a = signal.butter(1, 0.01, 'lowpass')  # 越小越光
 def process_data_and_calculate_metrics(raw_data,T):
     # Load matrices and constants
     decouple_mix = pd.read_csv('force_decouple_python/m8301c_use/decoupled.csv', header=None)
