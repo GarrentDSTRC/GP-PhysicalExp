@@ -28,9 +28,9 @@ def process_data_and_calculate_metrics(raw_data,T):
     EXC = gain_mix.iloc[6].value
 
     # Constants for calculations
-    thrust0 =-0.748679094098#-0.717
-    lift0   =0.27854819462#  0.275-0.099
-    mz0     =-0.0035267525 # -0.00118-0.003
+    thrust0 =-1.1409941423250798 #-0.748679094098#
+    lift0   =0.31073077324270965 #0.27854819462#
+    mz0     =-0.029385827592709895 #-0.0035267525 #
     c = 0.06
     s = 0.22
     U = 0.2
@@ -46,7 +46,7 @@ def process_data_and_calculate_metrics(raw_data,T):
     hmin, hmax = np.amin(h0_theta0_filtered[0]), np.amax(h0_theta0_filtered[0])
     tmin, tmax = np.amin(h0_theta0_filtered[1]), np.amax(h0_theta0_filtered[1])
     h0_theta0_filtered[0] = (h0_theta0_filtered[0] - (hmax + hmin) / 2) / 1.250 * 0.1  ## M
-    h0_theta0_filtered[1] = (h0_theta0_filtered[1] - 2.388) / 5.0 * 2 * np.pi ## rad
+    h0_theta0_filtered[1] = (h0_theta0_filtered[1] -(tmax + tmin) / 2) / 5.0 * 2 * np.pi ## rad
 
     #h0_theta0[0]          = (h0_theta0[0]         -  (hmax + hmin) / 2) / 1.25  * 0.1     # 平均归零, 长度 m,   1.247V=0.1m
     #h0_theta0[1] = (h0_theta0[1] - (tmax + tmin) / 2) /5.0*2*np.pi   # 平均归零, 弧度 rad, 5V=360deg
@@ -144,7 +144,7 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     mz0     =-0.0035267525 # -0.00118-0.003
     c = 0.06
     s = 0.22
-    U = 0.396
+    U = 0.20
 
     # Filtering parameters
     b, a = signal.butter(1, 0.01, 'lowpass')
@@ -157,7 +157,7 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     hmin, hmax = np.amin(h0_theta0_filtered[0]), np.amax(h0_theta0_filtered[0])
     tmin, tmax = np.amin(h0_theta0_filtered[1]), np.amax(h0_theta0_filtered[1])
     h0_theta0_filtered[0] = (h0_theta0_filtered[0] - (hmax + hmin) / 2) / 1.250 * 0.1  ## M
-    h0_theta0_filtered[1] = (h0_theta0_filtered[1] - 2.388) / 5.0 * 2 * np.pi ## rad
+    h0_theta0_filtered[1] = (h0_theta0_filtered[1] - (tmax + tmin) / 2) / 5.0 * 2 * np.pi ## rad
 
     #h0_theta0[0]          = (h0_theta0[0]         -  (hmax + hmin) / 2) / 1.25  * 0.1     # 平均归零, 长度 m,   1.247V=0.1m
     #h0_theta0[1] = (h0_theta0[1] - (tmax + tmin) / 2) /5.0*2*np.pi   # 平均归零, 弧度 rad, 5V=360deg

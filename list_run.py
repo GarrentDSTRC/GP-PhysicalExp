@@ -15,7 +15,7 @@ mode="experiment"#DTLZ#WFG
 path1 = r".\Database\x.csv"
 path2 = r".\Database\y.csv"
 X = np.loadtxt(path1, delimiter=',')
-#X = normalizer.denormalize(X)
+X = normalizer.denormalize(X)
 
 for i in range(0, len(X), 8):
     batch_X = X[i:i+8]
