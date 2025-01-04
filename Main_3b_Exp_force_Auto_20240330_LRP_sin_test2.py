@@ -76,7 +76,7 @@ def daq_collection(T):
 
     print(' ---DAQ software finished--- ')
     time.sleep(3*T)
-    CT, ETA = process_data_and_calculate_metrics(result,T)
+    CT, ETA = process_data_and_calculate_metricsETA2(result,T)
     global_results=[CT,  ETA]  # 将结果放入全局变量
     print("Results put into global_results")
 
