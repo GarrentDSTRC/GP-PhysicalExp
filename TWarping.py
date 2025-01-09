@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 controlFre = 3000
 c=0.06
-U=0.2
+U=0.06
 mode="experiment"
 def generate_waveform( X, folder_name,mode="CFD"):
     # 创建文件夹（如果不存在）
@@ -156,7 +156,7 @@ if __name__=="__main__":
     #[9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01  采集效率19%组1
     #6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,  采集效率19%组2
 
-    x=[6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,0]
+    x=[9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01,0]
     #X=[0.06, 0.7, 55, -140, 0.9,0.9,100]
     #x=norm.normalize(X).tolist()
 
@@ -165,7 +165,7 @@ if __name__=="__main__":
 
 
     last_col = X[-1]  # Extract the last column
-    j=1
+    j=0
     np.savetxt(r'.\MMGP_OL%d\dataX.txt' % (j % 8), np.array([[0, 0, 0, 0, 0, 0, 20, 12000]]),
                            delimiter=',', fmt='%d')
     generate_waveform(X[0:-1],"MMGP_OL%d"% (j % 8),mode=mode)

@@ -176,16 +176,16 @@ def main_sample(duration,T):
     data_len=samplepara.cycles*len(channel_list) #计算数据个数
     start_time = time.time()
     collected_data = []
-    #while (time.time() - start_time) < duration:
-    device.adc.clear_buffer()  # 清除ADC模块硬件和软件缓冲区数据
-    device.adc.start_task()  # 启动采样任务
-    device.adc.send_trigger()  # 默认为软件触发,发送软件触发命令
-    (errorcode,result)=device.adc.read_analog_sync(data_len,1000000)
-    collected_data.extend(result)
-    device.adc.stop_task()
-    #打印采样结果
-    device.adc.stop_task()  # 停止采样任务
-    print("ADC sample, soft trigger, get data len: %d"%(len(collected_data)))
+    while (time.time() - start_time) < duration:
+        device.adc.clear_buffer()  # 清除ADC模块硬件和软件缓冲区数据
+        device.adc.start_task()  # 启动采样任务
+        device.adc.send_trigger()  # 默认为软件触发,发送软件触发命令
+        (errorcode,result)=device.adc.read_analog_sync(data_len,1000000)
+        collected_data.extend(result)
+        device.adc.stop_task()
+        #打印采样结果
+        device.adc.stop_task()  # 停止采样任务
+        print("ADC sample, soft trigger, get data len: %d"%(len(collected_data)))
 
     reshaped_data = np.reshape(collected_data, (len(collected_data) // 8, 8))
     # 转置数组，使得列数变为8

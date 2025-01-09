@@ -112,7 +112,7 @@ def process_data_and_calculate_metrics(raw_data,T):
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
     cun = np.mean(Ct_mean[:-num_period])
     # 将Eta的平均值转换为字符串，并保留两位小数
-    cun = f"{cun:.2f}"
+    cun = f"{cun:.3f}"
     # 更新文件名，将Eta的平均值插入到文件名中
     filename = f"force_decouple_python\\raw_data\\CT{timestamp}_{cun}.csv"
 
@@ -144,7 +144,7 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     mz0     =-0.0035267525 # -0.00118-0.003
     c = 0.06
     s = 0.22
-    U = 0.20
+    U = 0.4
 
     # Filtering parameters
     b, a = signal.butter(1, 0.01, 'lowpass')
@@ -204,9 +204,10 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
 
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+
     Eta_mean = np.mean(Eta)
     # 将Eta的平均值转换为字符串，并保留两位小数
-    Eta_mean_str = f"{Eta_mean:.2f}"
+    Eta_mean_str = f"{Eta_mean:.3f}"
     # 更新文件名，将Eta的平均值插入到文件名中
     filename = f"force_decouple_python\\raw_data\\Eta{timestamp}_{Eta_mean_str}.csv"
     op = pd.DataFrame(filterd_data_aug.T[:-num_period-1],columns=['h0','theta0','f_thrust','f_lift','mz','vy','wz','Cd','Cpout','Eta'])
