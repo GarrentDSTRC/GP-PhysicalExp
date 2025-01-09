@@ -197,9 +197,16 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     Eta          = np.zeros(Pout.shape[0])+1.0e-9
     #num_period = int(float(path[-14:-11])*500)
     num_period = int(500*T)
+
+    alpha=[]
     for i in range(Pout.shape[0]-num_period-1):
         Eta[i]   = np.mean( Pout[i:i+num_period] ) / (0.5*1000*U*U*U*(np.amax(h0_theta0_filtered[0])- np.amin(h0_theta0_filtered[0]))*s)
 
+        if (vy2[i] < 0):
+            alp=-(( h0_theta0_filtered[1][i]) -np.arctan(vy2[i]/U))
+        else :
+            alp=((h0_theta0_filtered[1][i])-np.arctan(vy2[i]/U ))
+        alpha.append(alp)
     filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
 
     now = datetime.datetime.now()
@@ -213,7 +220,10 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     op = pd.DataFrame(filterd_data_aug.T[:-num_period-1],columns=['h0','theta0','f_thrust','f_lift','mz','vy','wz','Cd','Cpout','Eta'])
     op.to_csv(filename)
 
-    return np.mean(Eta) , 0
+
+    mean_alpha0 = np.mean(np.array(alpha))/np.pi*180
+
+    return np.mean(Eta) , mean_alpha0
 
 
 # def process_data_and_calculate_metricsETA(raw,T):
