@@ -158,7 +158,8 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     tmin, tmax = np.amin(h0_theta0_filtered[1]), np.amax(h0_theta0_filtered[1])
     h0_theta0_filtered[0] = (h0_theta0_filtered[0] - (hmax + hmin) / 2) / 1.250 * 0.1  ## M
     h0_theta0_filtered[1] = (h0_theta0_filtered[1] - (tmax + tmin) / 2) / 5.0 * 2 * np.pi ## rad
-
+    for i in range(len(h0_theta0_filtered[1])):
+        print(h0_theta0_filtered[1][i]/np.pi*180)
     #h0_theta0[0]          = (h0_theta0[0]         -  (hmax + hmin) / 2) / 1.25  * 0.1     # 平均归零, 长度 m,   1.247V=0.1m
     #h0_theta0[1] = (h0_theta0[1] - (tmax + tmin) / 2) /5.0*2*np.pi   # 平均归零, 弧度 rad, 5V=360deg
 
@@ -207,6 +208,7 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
         else :
             alp=((h0_theta0_filtered[1][i])-np.arctan(vy2[i]/U ))
         alpha.append(alp)
+        
     filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
 
     now = datetime.datetime.now()

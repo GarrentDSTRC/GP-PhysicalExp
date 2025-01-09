@@ -9555,3 +9555,49 @@ INFO  2025-01-09T22:42:16.219 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB devic
 INFO  2025-01-09T22:42:16.219 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
 INFO  2025-01-09T22:42:16.221 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
 INFO  2025-01-09T22:42:16.256 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-01-09T22:55:57.554 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T22:55:57.554 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T22:55:57.570 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T22:55:57.570 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T22:55:57.570 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T22:55:57.572 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T22:55:57.607 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+INFO  2025-01-09T22:56:25.097 ..\DAQLIB\libdaq_adc_thread.cpp @ 78 ADCReadWorker:DeInit 
+INFO  2025-01-09T22:56:25.100 ..\DAQLIB\libdaq_device.cpp @ 83 libdaq_usb_device DeInit! 
+INFO  2025-01-09T22:56:25.100 ..\DAQLIB\libdaq_global.cpp @ 48 libusb usbEventThread delete ! 
+INFO  2025-01-09T22:56:25.116 ..\DAQLIB\libdaq_global.cpp @ 56 libusb exit ! 
+WARN  2025-01-09T22:56:25.159 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T22:56:25.159 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T22:56:25.175 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T22:56:25.175 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T22:56:25.175 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T22:56:25.177 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T22:56:25.213 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-01-09T23:01:33.001 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T23:01:33.001 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T23:01:33.018 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T23:01:33.018 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T23:01:33.018 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T23:01:33.020 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T23:01:33.054 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-01-09T23:15:27.989 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T23:15:27.989 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T23:15:28.005 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T23:15:28.005 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T23:15:28.005 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T23:15:28.007 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T23:15:28.042 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-01-09T23:16:18.730 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T23:16:18.730 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T23:16:18.746 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T23:16:18.746 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T23:16:18.746 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T23:16:18.748 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T23:16:18.783 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-01-09T23:17:09.175 ..\DAQLIB\libdaq_device.h @ 53 "device: status change to 1" 
+INFO  2025-01-09T23:17:09.175 ..\DAQLIB\libdaq_device.cpp @ 63 libdaq_usb_device Init! 
+INFO  2025-01-09T23:17:09.191 ..\DAQLIB\libdaq_adc_thread.cpp @ 52 ADCReadWorker:Init 
+INFO  2025-01-09T23:17:09.191 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB device Count:1" 
+INFO  2025-01-09T23:17:09.191 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
+INFO  2025-01-09T23:17:09.193 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
+INFO  2025-01-09T23:17:09.229 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
