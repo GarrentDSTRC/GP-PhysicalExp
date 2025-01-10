@@ -31,15 +31,15 @@ CA = torch.linspace(10,35,6)
 a,b,c,d,e,f,g=torch.meshgrid(St,ad,phi,theta,N,A,CA)
 TestX=torch.as_tensor(list(zip(a.flatten(),b.flatten(),c.flatten(),d.flatten(),e.flatten(),f.flatten(),g.flatten())) )
 OLSCALE=1
-#UPB=[0.9, 0.8, 85, -45, 0.9,0.9]
-#LOWB=[0.4, 0.4, 55, -140, -0.9,-0.9]
+UPB=[0.9, 0.8, 85, -45, 0.9,0.9]
+LOWB=[0.4, 0.4, 55, -140, -0.9,-0.9]
 
 #UPB=[0.9, 0.8*0.1/0.4, 85, -45, 0.9,0.9]
 #LOWB=[0.4, 0.4*0.1/0.4 , 55, -140, -0.9,-0.9]
 
 
-UPB=[0.25, 0.6, 40, 180, 0.95,0.95]
-LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95]
+# UPB=[0.25, 0.6, 40, 180, 0.95,0.95]
+# LOWB=[0.1, 0.1, 5, -180, -0.95,-0.95]
 import time
 inittime=time.time()
 from gpytorch.kernels import Kernel

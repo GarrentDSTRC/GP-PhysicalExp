@@ -139,10 +139,10 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     EXC = gain_mix.iloc[6].value
 
     # Constants for calculations
-    thrust0 =-0.748679094098#-0.717
-    lift0   =0.28054819462#  0.275-0.099
-    mz0     =-0.0035267525 # -0.00118-0.003
-    c = 0.06
+    thrust0 =-0.8681423771634483#-0.717
+    lift0   =0.12947006782422754 #  0.275-0.099
+    mz0     =-0.0021261342483011817 # -0.00118-0.003
+    c = 0.08
     s = 0.22
     U = 0.4
 
@@ -158,8 +158,6 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     tmin, tmax = np.amin(h0_theta0_filtered[1]), np.amax(h0_theta0_filtered[1])
     h0_theta0_filtered[0] = (h0_theta0_filtered[0] - (hmax + hmin) / 2) / 1.250 * 0.1  ## M
     h0_theta0_filtered[1] = (h0_theta0_filtered[1] - (tmax + tmin) / 2) / 5.0 * 2 * np.pi ## rad
-    for i in range(len(h0_theta0_filtered[1])):
-        print(h0_theta0_filtered[1][i]/np.pi*180)
     #h0_theta0[0]          = (h0_theta0[0]         -  (hmax + hmin) / 2) / 1.25  * 0.1     # 平均归零, 长度 m,   1.247V=0.1m
     #h0_theta0[1] = (h0_theta0[1] - (tmax + tmin) / 2) /5.0*2*np.pi   # 平均归零, 弧度 rad, 5V=360deg
 
@@ -204,26 +202,28 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
         Eta[i]   = np.mean( Pout[i:i+num_period] ) / (0.5*1000*U*U*U*(np.amax(h0_theta0_filtered[0])- np.amin(h0_theta0_filtered[0]))*s)
 
         if (vy2[i] < 0):
-            alp=-(( h0_theta0_filtered[1][i]) -np.arctan(vy2[i]/U))
+            alp=(( h0_theta0_filtered[1][i]) +np.arctan(vy2[i]/U))
         else :
-            alp=((h0_theta0_filtered[1][i])-np.arctan(vy2[i]/U ))
+            alp=((-h0_theta0_filtered[1][i])-np.arctan(vy2[i]/U ))
         alpha.append(alp)
         
-    filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
+    filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta,alp))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
 
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
 
     Eta_mean = np.mean(Eta)
+    mean_alpha0 = np.mean(np.array(alpha))/np.pi*180
     # 将Eta的平均值转换为字符串，并保留两位小数
     Eta_mean_str = f"{Eta_mean:.3f}"
+    mean_alpha0_str = f"{mean_alpha0:.3f}"
     # 更新文件名，将Eta的平均值插入到文件名中
-    filename = f"force_decouple_python\\raw_data\\Eta{timestamp}_{Eta_mean_str}.csv"
-    op = pd.DataFrame(filterd_data_aug.T[:-num_period-1],columns=['h0','theta0','f_thrust','f_lift','mz','vy','wz','Cd','Cpout','Eta'])
+    filename = f"force_decouple_python\\raw_data\\Eta{timestamp}_{Eta_mean_str}_alpha{mean_alpha0_str}.csv"
+    op = pd.DataFrame(filterd_data_aug.T[:-num_period-1],columns=['h0','theta0','f_thrust','f_lift','mz','vy','wz','Cd','Cpout','Eta','alp'])
     op.to_csv(filename)
 
 
-    mean_alpha0 = np.mean(np.array(alpha))/np.pi*180
+
 
     return np.mean(Eta) , mean_alpha0
 
