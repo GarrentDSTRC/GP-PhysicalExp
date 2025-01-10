@@ -158,7 +158,7 @@ if __name__=="__main__":
     # Use the adam optimizer
     optimizer = torch.optim.Adam(model.parameters(), lr=0.1)  # Includes GaussianLikelihood parameters
 
-    cofactor = [0.5, 0.5]
+    cofactor = [1,0]
     for j in range(Episode):
         print("Episode",j,"point",len(train_y))
         model.train()
@@ -175,7 +175,7 @@ if __name__=="__main__":
                 print('Iter %d/%d - Loss: %.3f' % (i + 1, training_iter, loss.item()))
                 optimizer.step()
         save()
-        MAE(model, likelihood)
+        #MAE(model, likelihood)
         #################test###################
         IGD,pop=optIGD(model, likelihood, num_task=num_tasks, testmode=testmode, train_x=train_x)
         #with gpytorch.settings.cholesky_jitter(1e-0):
@@ -184,7 +184,7 @@ if __name__=="__main__":
         #f.writelines((str(train_y.shape[0]) + ",", str( M[0]) + ",", str( M[1])+ ",", str(IGD) + "\n"))
         #f.close()
         ##########################################################infill###################
-        #cofactor=[0.5,1]
+        cofactor=[1,0]
         X,Y=infillGA(model, likelihood, Infillpoints, dict, num_tasks,"EI", device=device, cofactor=cofactor, y_max=[torch.max(train_y[:,0]).item() ,torch.max(train_y[:,1]).item()], offline=Offline,train_x=train_x,testmode=testmode,final_population_X=pop,norm=normalizer)
         cofactor=UpdateCofactor(model,likelihood,X.to(torch.float32),Y.to(torch.float32),cofactor,torch.max(train_y,dim=0).values-torch.min(train_y,dim=0).values)
 

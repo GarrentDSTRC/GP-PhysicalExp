@@ -27,13 +27,12 @@ def process_data_and_calculate_metrics(raw_data,T):
     GAIN = np.array(gain_mix.iloc[0:6], dtype=np.float64)
     EXC = gain_mix.iloc[6].value
 
-    # Constants for calculations
-    thrust0 =-1.1409941423250798 #-0.748679094098#
-    lift0   =0.31073077324270965 #0.27854819462#
-    mz0     =-0.029385827592709895 #-0.0035267525 #
-    c = 0.06
+    thrust0 =-0.8681423771634483#-0.717
+    lift0   =0.12947006782422754 #  0.275-0.099
+    mz0     =-0.0021261342483011817 # -0.00118-0.003
+    c = 0.08
     s = 0.22
-    U = 0.2
+    U = 0.4
 
     # Filtering parameters
     b, a = signal.butter(1, 0.01, 'lowpass')
@@ -113,7 +112,12 @@ def process_data_and_calculate_metrics(raw_data,T):
     cun = np.mean(Ct_mean[:-num_period])
     # 将Eta的平均值转换为字符串，并保留两位小数
     cun = f"{cun:.3f}"
-    # 更新文件名，将Eta的平均值插入到文件名中
+    
+    cun2 = np.mean(Eta[:-num_period])
+    # 将Eta的平均值转换为字符串，并保留两位小数
+    cun2 = f"{cun2:.3f}"
+
+
     filename = f"force_decouple_python\\raw_data\\CT{timestamp}_{cun}.csv"
 
     op = pd.DataFrame(filterd_data_aug.T[:-num_period],columns=['h0','theta0','fx','fy','fz','mx','my','mz','f_thrust','f_lift','mz','vy','wz','Cd','Cpout','Eta'])
