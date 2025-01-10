@@ -200,14 +200,14 @@ def process_data_and_calculate_metricsETA2(raw_data,T):
     alpha=[]
     for i in range(Pout.shape[0]-num_period-1):
         Eta[i]   = np.mean( Pout[i:i+num_period] ) / (0.5*1000*U*U*U*(np.amax(h0_theta0_filtered[0])- np.amin(h0_theta0_filtered[0]))*s)
-
+    for i in range(Pout.shape[0]):
         if (vy2[i] < 0):
             alp=(( h0_theta0_filtered[1][i]) +np.arctan(vy2[i]/U))
         else :
             alp=((-h0_theta0_filtered[1][i])-np.arctan(vy2[i]/U ))
         alpha.append(alp)
         
-    filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta,alp))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
+    filterd_data_aug = np.vstack((h0_theta0_filtered, thrust, lift, mz, vy2, wz2, Ct, Cpout, Eta,alpha))  #(5, N) h0,theta0,fy(指向thrust),fx(指向lift),mz
 
     now = datetime.datetime.now()
     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
