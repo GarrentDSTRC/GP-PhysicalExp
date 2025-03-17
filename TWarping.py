@@ -5,8 +5,8 @@ from scipy.interpolate import interp1d
 import matplotlib.pyplot as plt
 
 controlFre = 3000
-c=0.06
-U=0.06
+c=0.08
+U=0.3
 mode="experiment"
 def generate_waveform( X, folder_name,mode="CFD"):
     # 创建文件夹（如果不存在）
@@ -156,7 +156,7 @@ if __name__=="__main__":
     #A [9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01  采集效率19%组1
     #B 6.63E-01,	3.75E-02	,7.38E-01,	6.13E-01,	7.88E-01,	1.25E-02,  采集效率19%组2
 
-    x=[9.13E-01	,1.12E-01,	9.62E-01,	2.87E-01,	6.37E-01	,1.38E-01,0]
+    x=[3.90E-01	,1.00E-02	,4.40E-01	,3.10E-01	,1.90E-01	,5.40E-01,0]
     X=norm.denormalize(x).tolist()
     print(X)
 

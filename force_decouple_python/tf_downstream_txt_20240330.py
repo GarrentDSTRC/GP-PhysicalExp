@@ -1,5 +1,4 @@
 import math
-
 import pandas as pd
 import numpy as np
 import os
@@ -32,7 +31,7 @@ def process_data_and_calculate_metrics(raw_data,T):
     mz0     =-0.0021261342483011817 # -0.00118-0.003
     c = 0.08
     s = 0.22
-    U = 0.4
+    U = 0.3
 
     # Filtering parameters
     b, a = signal.butter(1, 0.01, 'lowpass')
