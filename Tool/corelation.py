@@ -3,31 +3,54 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import io
 import sys
-# 设置标准输出的编码为 UTF-8
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-# 读取CSV文件
-df = pd.read_csv('train_y.csv', header=None, names=['Column1', 'Column2'], sep=',')
 
-# 检查缺失值
+# 设置标准输出编码为UTF-8
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+# 读取数据文件
+df = pd.read_csv('Tool/train_y.csv', 
+                header=None, 
+                names=['Column1', 'Column2'], 
+                sep=',')
+
+# 数据质量检查
 print("缺失值检查:")
 print(df.isnull().sum())
 
-# 计算皮尔逊相关系数和p值
+# 计算统计指标
 corr, p_value = stats.pearsonr(df['Column1'], df['Column2'])
+print(f'相关系数: {corr:.3f}')
+print(f'P值: {p_value:.4f}')
+print('相关性显著' if p_value < 0.05 else '相关性不显著')
 
-# 输出结果
-print('相关系数为:', corr)
-print('对应的p值为:', p_value)
+# 配置字体和输出参数
+plt.rcParams.update({
+    'font.family': 'Times New Roman',
+    'font.size': 12,
+    'axes.labelsize': 18,
+    'axes.titlesize': 18,
+    'xtick.labelsize': 18,
+    'ytick.labelsize': 18,
+    'figure.dpi': 300
+})
 
-# 判断显著性
-if p_value < 0.05:
-    print('相关性在0.05水平上显著。')
-else:
-    print('相关性不显著。')
+# 创建图形对象
+fig, ax = plt.subplots(figsize=(8, 6))
 
-plt.scatter(df['Column1'], df['Column2'])
-plt.xlabel(r'$\eta$', fontsize=18)
-plt.ylabel(r'$\beta$', fontsize=18)
-plt.tick_params(axis='both', which='major', labelsize=16)
-#plt.title('Scatter Plot: Column1 vs Column2', fontsize=18)
-plt.show()
+# 绘制散点图
+ax.scatter(df['Column1'], df['Column2'], 
+          edgecolors='b', 
+          alpha=0.7)
+
+# 设置坐标轴标签
+ax.set_xlabel(r'$\eta$', fontsize=18)
+ax.set_ylabel(r'$\beta$', fontsize=18)
+
+# 调整页面布局
+plt.tight_layout()
+
+# 保存为PDF文件（矢量图格式）
+plt.savefig('corela_aym.pdf', format='pdf', bbox_inches='tight')
+
+# 清理内存
+plt.close()
