@@ -16704,3 +16704,4 @@ INFO  2025-01-12T16:30:29.978 ..\DAQLIB\libdaq_global.cpp @ 80 "Opened USB devic
 INFO  2025-01-12T16:30:29.978 ..\DAQLIB\libdaq_global.cpp @ 86 libusb init success! 
 INFO  2025-01-12T16:30:29.980 ..\DAQLIB\libdaq_adc.cpp @ 756 "DAQ_newname1.ADC select trigger source: SW" 
 INFO  2025-01-12T16:30:30.016 ..\DAQLIB\libdaq_adc.cpp @ 813 "DAQ_newname1.ADC sent soft trigger" 
+WARN  2025-04-25T17:28:48.838 ..\DAQLIB\libdaq_global.cpp @ 90 libusb init failed! 
